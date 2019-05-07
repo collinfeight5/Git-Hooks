@@ -34,3 +34,6 @@ for j in final_list:
 	shutil.copy(j,'file_folder1')
 
 subprocess.run(['cpplint', '--recursive', r'C:\KanziWorkspace_3_6_3_2514\Projects\digital-display-main\file_folder1'])
+
+# delete folder created
+shutil.rmtree(r'C:\KanziWorkspace_3_6_3_2514\Projects\digital-display-main\file_folder1')
