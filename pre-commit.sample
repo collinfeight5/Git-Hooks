@@ -1,0 +1,36 @@
+#!C:\Python36\env\Scripts\python.exe python3
+###########
+#Change path in line 1 to reflect your path to python interpreture 
+###########
+# This hook is used to parse the cpp/h files that are being committed 
+# It uses Cpplint, which is maintained by Google and uses Googles code standards
+#
+# To enable this hook, rename this file to "pre-commit".
+
+import subprocess
+import os
+import sys
+import shutil
+
+#filelist = system('git', 'diff', '--cached', '--name-status').strip()
+filelist = subprocess.run(['git', 'diff', '--name-only', '--cached'], stdout=subprocess.PIPE)
+new_filelist = filelist.stdout.decode('utf-8')
+output = new_filelist.split("  ")
+new_output = output[0]
+list_output = new_output.split('\n')
+	
+
+final_list = []
+for item in range(0,len(list_output)-1):
+	final_list.append(list_output[item])
+print()
+print()
+print('These are the Files Being Committed',final_list)
+print()
+print()
+new_folder = os.makedirs('file_folder1',exist_ok=True)
+
+for j in final_list:
+	shutil.copy(j,'file_folder1')
+
+subprocess.run(['cpplint', '--recursive', r'C:\KanziWorkspace_3_6_3_2514\Projects\digital-display-main\file_folder1'])
