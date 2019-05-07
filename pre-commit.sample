@@ -1,6 +1,7 @@
 #!C:\Python36\env\Scripts\python.exe python3
 ###########
 #Change path in line 1 to reflect your path to python interpreture 
+#Change path in "subprocess.run" to match where "new_folder" is created
 ###########
 # This hook is used to parse the cpp/h files that are being committed 
 # It uses Cpplint, which is maintained by Google and uses Googles code standards
@@ -12,11 +13,14 @@ import os
 import sys
 import shutil
 
-#filelist = system('git', 'diff', '--cached', '--name-status').strip()
+# FileList returns byte-wise string of files being committed
 filelist = subprocess.run(['git', 'diff', '--name-only', '--cached'], stdout=subprocess.PIPE)
+# decode byte-wise string into string
 new_filelist = filelist.stdout.decode('utf-8')
+# Split "new_filelist" on double spaces, as this is what seperates files 
 output = new_filelist.split("  ")
 new_output = output[0]
+# Split new string "new_output" on new lines to get list of files
 list_output = new_output.split('\n')
 	
 
@@ -28,12 +32,11 @@ print()
 print('These are the Files Being Committed',final_list)
 print()
 print()
-new_folder = os.makedirs('file_folder1',exist_ok=True)
-
+new_folder = os.makedirs('file_folder1',exist_ok=False)
+#copy files being committed to new folder created for use with cpplint
 for j in final_list:
 	shutil.copy(j,'file_folder1')
-
+# runs cpplint command over entirety of folder in path specified
 subprocess.run(['cpplint', '--recursive', r'C:\KanziWorkspace_3_6_3_2514\Projects\digital-display-main\file_folder1'])
-
-# delete folder created
+# deletes directory created with new_folder variable
 shutil.rmtree(r'C:\KanziWorkspace_3_6_3_2514\Projects\digital-display-main\file_folder1')
