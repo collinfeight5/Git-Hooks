@@ -1,5 +1,6 @@
 #!C:\Python36\env\Scripts\python.exe python3
 ###########
+#install shutil, cpplint in python env that is used in line 1
 #Change path in line 1 to reflect your path to python interpreture 
 #Change path in "subprocess.run" to match where "new_folder" is created
 ###########
@@ -13,6 +14,11 @@ import os
 import sys
 import shutil
 
+# This path should be to start of things under version control
+directory_path = os.getcwd()
+# Name for folder being created
+new_folder_name = 'file_folder1'
+complete_path = os.path.join(directory_path, new_folder_name)
 # FileList returns byte-wise string of files being committed
 filelist = subprocess.run(['git', 'diff', '--name-only', '--cached'], stdout=subprocess.PIPE)
 # decode byte-wise string into string
@@ -21,22 +27,22 @@ new_filelist = filelist.stdout.decode('utf-8')
 output = new_filelist.split("  ")
 new_output = output[0]
 # Split new string "new_output" on new lines to get list of files
-list_output = new_output.split('\n')
-	
-
+list_output = new_output.split('\n')	
 final_list = []
 for item in range(0,len(list_output)-1):
 	final_list.append(list_output[item])
 print()
 print()
-print('These are the Files Being Committed',final_list)
+print('These are the Files Being Committed', final_list)
 print()
 print()
-new_folder = os.makedirs('file_folder1',exist_ok=False)
+shutil.rmtree(complete_path)
+# Creates directory in current working directory
+new_folder = os.makedirs(new_folder_name, exist_ok=False)
 #copy files being committed to new folder created for use with cpplint
 for j in final_list:
-	shutil.copy(j,'file_folder1')
+	shutil.copy(j, new_folder_name)
 # runs cpplint command over entirety of folder in path specified
-subprocess.run(['cpplint', '--recursive', r'C:\KanziWorkspace_3_6_3_2514\Projects\digital-display-main\file_folder1'])
+subprocess.run(['cpplint', '--recursive', complete_path])
 # deletes directory created with new_folder variable
-shutil.rmtree(r'C:\KanziWorkspace_3_6_3_2514\Projects\digital-display-main\file_folder1')
+shutil.rmtree(complete_path)
