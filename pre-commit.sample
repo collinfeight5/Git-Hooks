@@ -34,7 +34,6 @@ print()
 print('These are the Files Being Committed', final_list)
 print()
 print()
-shutil.rmtree(complete_path)
 # Creates directory in current working directory
 new_folder = os.makedirs(new_folder_name, exist_ok=False)
 #copy files being committed to new folder created for use with cpplint
