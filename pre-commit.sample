@@ -2,12 +2,10 @@
 ###########
 #install shutil, cpplint in python env that is used in line 1
 #Change path in line 1 to reflect your path to python interpreture 
-#Change path in "subprocess.run" to match where "new_folder" is created
 ###########
 # This hook is used to parse the cpp/h files that are being committed 
 # It uses Cpplint, which is maintained by Google and uses Googles code standards
-#
-# To enable this hook, rename this file to "pre-commit".
+# To enable this hook, rename this file to "pre-commit" in githooks folder.
 
 import subprocess
 import os
