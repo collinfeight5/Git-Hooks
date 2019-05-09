@@ -28,7 +28,8 @@ new_output = output[0]
 list_output = new_output.split('\n')	
 final_list = []
 for item in range(0,len(list_output)-1):
-	final_list.append(list_output[item])
+	if '.cpp' or '.h' in list_output[item]:
+		final_list.append(list_output[item])
 print()
 print()
 print('These are the Files Being Committed', final_list)
